@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Resume Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General Page Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 80px; /* Adjust as needed */
+}
+
+/* Container Styling (Wider Form) */
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 85%;
+    max-width: 750px;  /* Increased width */
+}
+
+/* Headings */
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px; /* Increased padding */
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Button Styling */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px; /* Slightly bigger button */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 17px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Dynamic Entries (Experience, Education, etc.) */
+.exp-entry, .edu-entry, .software-entry, .lang-entry {
+    border: 1px solid #ddd;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    background: #fafafa;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 10px;
+    }
+}
+
+/* Style the back button */
+.back-button {
+    position: absolute; /* Place it in the corner */
+    top: 20px; /* Adjust top position as needed */
+    left: 20px; /* Adjust left position as needed */
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .back-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+
+    </style>
+</head>
+<body>
+
+    <a href="templates.html" class="back-button">&lt; Back</a>
+
+    <div class="container">
+        <h2 class="text-center mb-4">Classic Resume : Details Form</h2>
+        
+            <h3>Personal Information</h3>
+            <!-- Personal Info -->
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="fullName">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Job Title</label>
+        <input type="text" class="form-control" id="jobTitle">
+    </div>
+            
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-control" id="address">
+    </div>
+            
+    <div class="mb-3">
+        <label class="form-label">Contact Number</label>
+        <input type="text" class="form-control" id="phone">
+    </div>
+           
+    <div class="mb-3">
+        <label class="form-label">Email ID</label>
+        <input type="email" class="form-control" id="email">
+    </div>
+            
+    <div class="mb-3">
+        <label class="form-label">LinkedIn Profile URL</label>
+        <input type="text" class="form-control" id="linkedin">
+    </div>
+
+            <!-- Summary -->
+            <div class="mb-3">
+                   <h4>Professional Summary</h4>
+                   <textarea id="summary" class="form-control" rows="4" maxlength="800" oninput="updateWordCount()" required></textarea>
+                   <p class="word-count" id="wordCount">0 / 100 words</p>
+            </div>
+
+           <!-- Experience -->
+           <h4>Experience (Max 4)</h4>
+           <div id="experienceContainer"></div>
+           <button class="btn btn-secondary w-100 my-2" onclick="addExperience()">Add Experience</button>
+
+             <!-- Education -->
+                <h4>Education (Max 4)</h4>
+                <div id="educationContainer"></div>
+               <button class="btn btn-secondary w-100 my-2" onclick="addEducation()">Add Education</button>
+            
+
+            <!-- Certifications -->
+            <h4>Certifications & Enhancements (Max 4)</h4>
+            <div id="certificationContainer"></div>
+            <button class="btn btn-secondary w-100 my-2" onclick="addCertification()">Add Certification</button>
+
+            <!-- Skills -->
+            <h4>Skills (Max 5)</h4>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="skills" placeholder="Type your skill and press Enter">
+                 <ul id="skillsList"></ul>
+            </div>
+
+            <h3>Software (Max 5)</h3>
+            <div id="software">
+                <label>Name: <input type="text" class="software-name"></label>
+                <label>Proficiency (0-100%): <input type="number" class="software-level" min="0" max="100"></label>
+            </div>
+            <button type="button" onclick="addSoftware()">+ Add Software</button>
+
+            <!-- Languages -->
+            <h4>Languages Known (Max 5)</h4>
+               <div class="mb-3">
+               <input type="text" class="form-control" id="languagesInput" placeholder="Type known language and press Enter">
+                <ul id="languagesList"></ul>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="btn btn-primary w-100" onclick="saveData()">Generate Resume</button>
+        
+    </div>
+
+    <script>
+        let educationCount = 0, experienceCount = 0, certificationCount = 0;
+
+        function updateWordCount() {
+            let text = document.getElementById('summary').value.trim();
+            let words = text.split(/\s+/).filter(word => word.length > 0);
+            if (words.length > 100) {
+                document.getElementById('summary').value = words.slice(0, 100).join(" ");
+                words = words.slice(0, 100);
+            }
+            document.getElementById('wordCount').innerText = words.length + " / 100 words";
+        }
+        
+        function showWarning(message) {
+            alert(message);
+        }
+        //----------------------------------------------------------------------------------------------------------------------
+
+        function addExperience() {
+            if (experienceCount >= 4) return;
+            experienceCount++;
+    
+            let container = document.getElementById("experienceContainer");
+            let div = document.createElement("div");
+    
+            div.innerHTML = `
+                <div class="mb-3">
+                    <label>Job Title</label>
+                    <input type="text" class="form-control">
+                    <label>Company</label>
+                    <input type="text" class="form-control">
+                    <label>Duration</label>
+                    <input type="text" class="form-control">
+                    <label>Job Description (Press Enter for new point)</label>
+                    <input type="text" class="form-control experience-input" placeholder="Type your description point one at a time for this experience and press Enter">
+                    <ul class="experience-list"></ul>
+                    <span class="remove-btn" onclick="removeEntry(this, 'experience')">Remove</span>
+                </div>`;
+    
+            container.appendChild(div);
+    
+            // Add event listener for dynamic input handling
+            let inputField = div.querySelector(".experience-input");
+            let list = div.querySelector(".experience-list");
+    
+            inputField.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    let text = this.value.trim();
+                    if (text) {
+                        let li = document.createElement("li");
+                        li.textContent = text;
+                        list.appendChild(li);
+                        this.value = "";  // Clear input after adding
+                    }
+                }
+            });
+        }
+
+        function addEducation() {
+            if (educationCount >= 4) return;
+            educationCount++;
+            let container = document.getElementById("educationContainer");
+            let div = document.createElement("div");
+            div.innerHTML = `
+                <div class="mb-3">
+                    <label>Degree</label>
+                    <input type="text" class="form-control">
+                    <label>Institution</label>
+                    <input type="text" class="form-control">
+                    <label>Year</label>
+                    <input type="text" class="form-control">
+                    <label>Percentage/CGPA</label>
+                    <input type="text" class="form-control">
+                    <span class="remove-btn" onclick="removeEntry(this, 'education')">Remove</span>
+                </div>`;
+            container.appendChild(div);
+        }
+
+        function addCertification() {
+            if (certificationCount >= 4) return;
+            certificationCount++;
+            let container = document.getElementById("certificationContainer");
+            let div = document.createElement("div");
+            div.innerHTML = `
+                <div class="mb-3">
+                    <label>Certificate Name</label>
+                    <input type="text" class="form-control">
+                    <label>Date of Issue</label>
+                    <input type="date" class="form-control">
+                    <label>Provider Name</label>
+                    <input type="text" class="form-control">
+                    <span class="remove-btn" onclick="removeEntry(this, 'certification')">Remove</span>
+                </div>`;
+            container.appendChild(div);
+        }
+
+        function removeEntry(el, type) {
+            el.parentElement.remove();
+            if (type === 'education') educationCount--;
+            else if (type === 'experience') experienceCount--;
+            else if (type === 'certification') certificationCount--;
+        }
+    
+        function addToList(inputId, listId, max) {
+            let inputField = document.getElementById(inputId);
+            inputField.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    let list = document.getElementById(listId);
+                    if (list.children.length >= max) return;
+                    let text = this.value.trim();
+                    if (text) {
+                        let li = document.createElement("li");
+                        li.textContent = text;
+                        list.appendChild(li);
+                        this.value = "";
+                    }
+                }
+            });
+        }
+
+        let languages = [];
+document.addEventListener("DOMContentLoaded", function () {
+    addToList("skills", "skillsList", 5);
+
+    let languagesInput = document.getElementById("languagesInput");
+    languagesInput.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            let language = this.value.trim();
+            if (language && languages.length < 5) {
+                let proficiency = prompt(`Enter proficiency score (1-10) for ${language}:`);
+                proficiency = parseInt(proficiency);
+
+                if (isNaN(proficiency) || proficiency < 1 || proficiency > 10) {
+                    alert("Please enter a valid proficiency score between 1 and 10.");
+                    return;
+                }
+
+                languages.push({ language, proficiency });
+
+                let li = document.createElement("li");
+                li.textContent = `${language} - Proficiency: ${proficiency}`;
+                document.getElementById("languagesList").appendChild(li);
+                
+                this.value = ""; // Clear input after adding
+            }
+        }
+    });
+});
+
+
+let softwareCount = 0;
+
+function addSoftware() {
+    if (softwareCount < 5) {
+        const softwareDiv = document.createElement('div');
+        softwareDiv.classList.add('software-entry');
+
+        softwareDiv.innerHTML = `
+            <label>Name: <input type="text" class="software-name"></label>
+            <label>Proficiency (0-100%): <input type="number" class="software-level" min="0" max="100"></label>
+            <button type="button" onclick="removeSoftware(this)">Remove</button>
+        `;
+
+        document.getElementById('software').appendChild(softwareDiv);
+        softwareCount++;
+    } else {
+        alert("You can only add up to 5 software skills.");
+    }
+}
+
+function removeSoftware(button) {
+    button.parentElement.remove();
+    softwareCount--;
+}
+        //------------------------------------------------------------------------------------------------------------------------------
+function saveData() {       
+            
+            const resumeData = {
+                name: document.getElementById("fullName").value,
+                jobTitle: document.getElementById("jobTitle").value,
+                address: document.getElementById('address').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                linkedin: document.getElementById('linkedin').value,
+                summary: document.getElementById('summary').value,
+                experience: [],
+                education: [],
+                certifications: [],
+                skills: [],
+                software: collectSoftwareData(), // Collect software details
+                languagesArr: languages // Save the collected languages and their proficiency
+            };
+
+
+       //-----------------------------------------------------------------------------------------------------------------------------------
+       // Collect Experience Data
+       document.querySelectorAll("#experienceContainer .mb-3").forEach((div) => {
+        let inputs = div.getElementsByTagName("input");
+        let jobDescList = [];
+        div.querySelectorAll(".experience-list li").forEach((li) => {
+            jobDescList.push(li.textContent);
+        });
+
+        resumeData.experience.push({
+            jobTitle: inputs[0].value,
+            company: inputs[1].value,
+            duration: inputs[2].value,
+            description: jobDescList
+        });
+    });
+
+        // Collect Education Data
+        document.querySelectorAll("#educationContainer .mb-3").forEach((div) => {
+            let inputs = div.getElementsByTagName("input");
+            resumeData.education.push({
+                degree: inputs[0].value,
+                institution: inputs[1].value,
+                year: inputs[2].value,
+                percentage: inputs[3].value
+            });
+        });
+
+       // Collect Certification Data
+       document.querySelectorAll("#certificationContainer .mb-3").forEach((div) => {
+        let inputs = div.getElementsByTagName("input");
+        resumeData.certifications.push({
+            name: inputs[0].value,
+            issueDate: inputs[1].value,
+            provider: inputs[2].value
+        });
+    });
+
+        
+// Function to collect software data in the form submission
+function collectSoftwareData() {
+    const softwareData = [];
+    document.querySelectorAll('.software-entry').forEach(entry => {
+        const name = entry.querySelector('.software-name').value;
+        const level = entry.querySelector('.software-level').value;
+        if (name && level) {
+            softwareData.push({ name, level });
+        }
+    });
+    return softwareData;
+}
+
+        // Collect Skills and Languages
+        document.querySelectorAll("#skillsList li").forEach((li) => resumeData.skills.push(li.textContent));
+        document.querySelectorAll("#languagesList li").forEach((li) => resumeData.languagesArr.push(li.textContent));
+
+        localStorage.setItem('resumeData4', JSON.stringify(resumeData));
+            window.location.href = 'preview4.html';
+}      
+    </script>
+</body>
+</html>

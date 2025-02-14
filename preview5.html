@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Resume Preview</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        /* Global Page Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #acacac;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Stacks elements vertically */
+            
+        }
+
+        .main-heading {
+            font-size: 48px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .sub-heading {
+            font-size: 30px;
+            color: #000000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+
+        /* A4 Size Styling */
+        .container {
+            width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 25px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #003366;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 5px;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 14px;
+            padding-right: 50px;
+            text-align: justify;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .left-column {
+            width: 55%;
+            padding-right: 10px;
+        }
+
+        .right-column {
+            width: 33%;
+            background-color: #f8f8f8;
+            padding: 15px;
+            box-shadow: inset -2px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: bold;
+        }
+
+        .date {
+            font-style: italic;
+            color: gray;
+        }
+
+        .info-box {
+            margin-bottom: 10px;
+        }
+
+        .info-box strong {
+            display: block;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .skills ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills ul li {
+            background-color: #003366;
+            color: white;
+            padding: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        .bar {
+            background-color: #ccc;
+            height: 10px;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .bar div {
+            height: 100%;
+            background-color: #003366;
+            border-radius: 5px;
+        }
+
+        .level {
+            font-size: 12px;
+            text-align: right;
+            margin-top: -8px;
+        }
+
+
+        .progress-bar {
+            background: #ddd;
+            height: 10px;
+            width: 100%;
+            margin-top: 5px;
+            position: relative;
+        }
+        .progress {
+            height: 10px;
+            background: #333;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+            }
+
+            .container {
+                width: 210mm;
+                height: 297mm;
+                box-shadow: none;
+            }
+        }
+
+        .download-container {
+            text-align: center; 
+            margin: 20px 0;
+        }
+        
+        #downloadPDF {
+            background-color: #007bff; /* Blue color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        #downloadPDF:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-container">
+        <h1 class="main-heading">Creative Resume - Preview</h1>
+        <p class="sub-heading">Here is your resume with your data!</p>
+    </div>
+
+    <div class="download-container">
+        <button id="downloadPDF">Download PDF</button>
+    </div><br>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="name"></h1>
+            <p><strong id="job-title" style="font-size: 18px;"></strong> </p>
+            <p id="intro"></p>
+        </div>
+
+        <div class="content">
+            <div class="left-column">
+                <div class="section" id="experience-section">
+                    <h2>Experience</h2>
+                    <div id="experience-list"></div>
+                </div><br>
+
+                <div class="section" id="education-section">
+                    <h2>Education</h2>
+                    <div id="education-list"></div>
+                </div><br>
+
+                <div class="section" id="certifications-section">
+                    <h2>Certifications</h2>
+                    <div id="certifications-list"></div>
+                </div>
+
+            </div>
+
+            <div class="right-column">
+                <div class="section" id="personal-info-section">
+                    <h2>Personal Info</h2>
+                    <p><strong>Address:</strong><br> <div id="address" class="info-box"></div>
+                    <p><strong>Phone:</strong><br> <div id="phone" class="info-box"></div>
+                    <p><strong>Email:</strong><br><div id="email" class="info-box"></div>
+                    <p><strong>LinkedIn:</strong><br><div id="linkedin" class="info-box"></div>
+                </div><br>
+
+                <div class="section skills">
+                    <h2>Skills</h2>
+                    <ul id="skills-list"></ul>
+                </div><br>
+
+                <div class="section">
+                    <h2>Software</h2>
+                    <div id="software-list"></div>
+                </div><br>
+
+                <div class="section">
+                    <h2>Languages</h2>
+                    <div id="language-list"></div>
+                </div><br>
+
+                <div class="section" id="interests-section">
+                    <h2>Interests</h2>
+                    <ul id="interests-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resumeData = JSON.parse(localStorage.getItem('resumeData5'));
+
+            if (resumeData) {
+                document.getElementById('name').textContent = resumeData.name;
+                document.getElementById('job-title').textContent = resumeData.jobTitle;
+                document.getElementById('intro').textContent = resumeData.summary;
+                document.getElementById('address').textContent = resumeData.address;
+                document.getElementById('phone').textContent = resumeData.phone;
+                document.getElementById('email').textContent = resumeData.email;
+                document.getElementById('linkedin').textContent = resumeData.linkedin;
+
+                const experienceContainer = document.getElementById('experience-list');
+                resumeData.experience.forEach(exp => {
+                    experienceContainer.innerHTML += `
+                        <p class="job-title">${exp.jobTitle}<strong> - </strong>${exp.company}</p>
+                        <p class="job-date"><strong>${exp.duration}</strong></p>
+                        <ul>${exp.description.map(desc => `<li>${desc}</li>`).join('')}</ul><br>
+                    `;
+                });
+
+                const educationContainer = document.getElementById('education-list');
+                resumeData.education.forEach(edu => {
+                    educationContainer.innerHTML += `
+                        <p class="job-title">${edu.degree}</p>
+                        <p class="job-title">${edu.institution}</p>
+                        <p class="job-date"><strong>  ${edu.year}</strong></p>
+                        <ul><li>Percentage/CGPA:  <strong>${edu.percentage}</strong></li></ul>
+                        <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+                    `;
+                });
+
+                const certificationsContainer = document.getElementById('certifications-list');
+                resumeData.certifications.forEach(cert => {
+                    certificationsContainer.innerHTML += `<p><strong>${cert.name}</strong></p><p>${cert.provider}</p><p>${cert.issueDate}</p><br>`;
+                });
+
+                const skillsList = document.getElementById('skills-list');
+                resumeData.skills.forEach(skill => {
+                    skillsList.innerHTML += `<li><STRONG>${skill}</STRONG></li><br>`;
+                });
+
+                const interestsList = document.getElementById('interests-list');
+                resumeData.interests.forEach(interest => {
+                    interestsList.innerHTML += `<li>${interest}</li><br>`;
+                });
+
+                const softwareContainer = document.getElementById('software-list');
+                resumeData.software.forEach(soft => {
+                    softwareContainer.innerHTML += `
+                        <p>${soft.name}</p>
+                        <div class="progress-bar"><div class="progress" style="width: ${soft.level}%;"></div></div><br>
+                    `;
+                });
+
+                document.getElementById("language-list").innerHTML = resumeData.languagesArr
+    .filter(lang => lang.language && lang.language !== "undefined")
+    .map(lang => `
+        <div>
+            <strong>${lang.language}</strong>
+            <div class="progress-bar">
+                <div class="progress" style="width: ${lang.proficiency * 10}%;"></div>
+            </div>
+        </div><br><br>
+    `).join("");
+
+
+            } else {
+                alert("No resume data found. Please fill out the form.");
+                window.location.href = 'form5.html';
+            }
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById("downloadPDF").addEventListener("click", function() {
+        const element = document.querySelector(".container"); // The resume container
+
+        html2pdf()
+            .set({
+                margin: [1,1,6,0],  //top , left , bottom , right
+                filename: 'Creative_Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(element)
+            .save();
+    });
+</script>
+
+</body>
+</html>

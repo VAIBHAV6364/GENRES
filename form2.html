@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresher's Resume 2 Input Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    
+    <style>
+        body {
+            background-color: black;
+            margin-top: 80px; /* Adjust as needed */
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #0056A2;
+            margin-bottom: 15px;
+        }
+        .word-count {
+            font-size: 12px;
+            color: gray;
+            text-align: right;
+        }
+
+        /* Style the back button */
+  .back-button {
+    position: absolute; /* Place it in the corner */
+    top: 20px; /* Adjust top position as needed */
+    left: 20px; /* Adjust left position as needed */
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .back-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+    </style>
+</head>
+<body>
+
+    <a href="templates.html" class="back-button">&lt; Back</a>
+
+<div class="container">
+    <h2 class="text-center">Fresher's Resume 2 : Input Form</h2>
+
+    <form id="resumeForm">
+        <!-- Personal Information -->
+        <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input id="fullname" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input id="phone" type="text" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="email" type="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">LinkedIn</label>
+            <input id="linkedin" type="text" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Address</label>
+            <input id="address" type="text" class="form-control">
+        </div>
+
+        <!-- Summary -->
+        <div class="mb-3">
+            <label class="form-label">Professional Summary</label>
+            <textarea id="summary" class="form-control" rows="4" maxlength="800" oninput="updateWordCount()" required></textarea>
+            <p class="word-count" id="wordCount">0 / 100 words</p>
+        </div>
+
+        <!-- Education -->
+        <h2>Education (Max 4)</h2>
+        <div id="educationContainer">
+            <div class="mb-3">
+                <input id="education1-degree" type="text" class="form-control" placeholder="Education / Degree & Major" required>
+                <input id="education1-institute" type="text" class="form-control mt-2" placeholder="Institution Name - [Percentage / CGPA]" required>
+                <input id="education1-year" type="text" class="form-control mt-2" placeholder="Year of Completion" required>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addEducation()">Add More</button>
+
+        <!-- Professional Enhancements -->
+        <h2>Professional Enhancements / CERTIFICATES (Max 4)</h2>
+        <div id="enhancementsContainer">
+            <div class="mb-3">
+                <input id="enhancement1" type="text" class="form-control" placeholder="Enhancement / Certificate Name - Provider Name - Date of Issue">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addEnhancement()">Add More</button>
+
+        <!-- Experience / Internship -->
+        <h2>Experience / Internship (Max 4)</h2>
+        <div id="experienceContainer">
+            <div class="mb-3">
+                <input id="experience1-title" type="text" class="form-control" placeholder="Job Title & Organization" required>
+                <input id="experience1-duration" type="text" class="form-control mt-2" placeholder="Duration" required>
+                <textarea id="experience1-responsibilities" class="form-control mt-2" rows="2" placeholder="Key Responsibilities"></textarea>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addExperience()">Add More</button>
+
+        <!-- Projects -->
+        <h2>Projects (Max 3)</h2>
+        <div id="projectsContainer">
+            <div class="mb-3">
+                <input id="project1-name" type="text" class="form-control" placeholder="Project Name">
+                <textarea id="project1-details" class="form-control mt-2" rows="2" placeholder="Project Details"></textarea>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addProject()">Add More</button>
+
+        <!-- Skills -->
+        <h2>Skills (Max 8)</h2>
+        <div id="skillsContainer">
+            <input id="skill1" type="text" class="form-control mb-2" placeholder="Skill">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addSkill()">Add More</button>
+
+        <!-- Extra-Curricular Activities -->
+        <h2>Extra-Curricular Activities</h2>
+        <div id="extraContainer">
+            <input id="extra1" type="text" class="form-control mb-2" placeholder="Activity">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addExtra()">Add More</button>
+
+        <button type="submit" class="btn btn-success mt-4 w-100">Generate Resume</button>
+    </form>
+</div>
+
+<script>
+    let educationCount =1, enhancementCount=1, experienceCount=1, projectCount=1, skillCount=1, extraCount=1;
+
+    function updateWordCount() {
+        let text = document.getElementById('summary').value.trim();
+        let words = text.split(/\s+/).filter(word => word.length > 0);
+        if (words.length > 100) {
+            document.getElementById('summary').value = words.slice(0, 100).join(" ");
+            words = words.slice(0, 100);
+        }
+        document.getElementById('wordCount').innerText = words.length + " / 100 words";
+    }
+    
+    function showWarning(message) {
+        alert(message);
+    }
+
+
+    function addEducation() {
+        let container = document.getElementById('educationContainer');
+        
+        if(educationCount < 4){
+        let div = document.createElement('div');
+        div.className = "mb-3 edu-entry";
+        div.innerHTML = `<input type="text" class="form-control edu-degree" placeholder="Degree & Major" required>
+                         <input type="text" class="form-control mt-2 edu-institution" placeholder="Institution Name - [Percentage / CGPA]" required>
+                         <input type="text" class="form-control mt-2 edu-year" placeholder="Year of Completion" required>`;
+        container.appendChild(div);
+        educationCount++;
+        }
+        else {
+            showWarning("You can only add up to 4 education entries.");
+        }
+    }
+
+    function addEnhancement() {
+        let container = document.getElementById('enhancementsContainer');
+        
+        if(enhancementCount < 4){
+        let div = document.createElement('div');
+        div.className = "mb-3 enhancement-entry";
+        div.innerHTML = `<input type="text" class="form-control enhancement-detail" placeholder="Enhancement / Certificate Name - Provider Name - Date of Issue">`;
+        container.appendChild(div);
+        enhancementCount++;
+        }
+        else {
+            showWarning("You can only add up to 4 professional enhancements.");
+        }
+    }
+
+    function addExperience() {
+        let container = document.getElementById('experienceContainer');
+        
+        if(experienceCount < 4){
+        let div = document.createElement('div');
+        div.className = "mb-3 exp-entry";
+        div.innerHTML = `<input type="text" class="form-control exp-title" placeholder="Job Title & Organization" required>
+                         <input type="text" class="form-control mt-2 exp-duration" placeholder="Duration" required>
+                         <textarea class="form-control mt-2 exp-responsibilities" rows="2" placeholder="Key Responsibilities"></textarea>`;
+        container.appendChild(div);
+        experienceCount++;
+        }
+        else {
+            showWarning("You can only add up to 4 experience entries.");
+        }
+    }
+
+    function addProject() {
+        let container = document.getElementById('projectsContainer');
+        
+        if(projectCount < 3){
+        let div = document.createElement('div');
+        div.className = "mb-3 proj-entry";
+        div.innerHTML = `<input type="text" class="form-control proj-name" placeholder="Project Name">
+                         <textarea class="form-control mt-2 proj-details" rows="2" placeholder="Project Details"></textarea>`;
+        container.appendChild(div);
+        projectCount++;
+        }
+        else {
+            showWarning("You can only add up to 3 projects.");
+        }
+    }
+
+    function addSkill() {
+        let container = document.getElementById('skillsContainer');
+        
+        if(skillCount < 8 ){
+        let input = document.createElement('input');
+        input.type = "text";
+        input.className = "form-control mb-2 skill-entry";
+        input.placeholder = "Skill";
+        container.appendChild(input);
+        skillCount++;
+        }
+        else {
+            showWarning("You can only add up to 8 skills.");
+        }
+    }
+
+    function addExtra() {
+        let container = document.getElementById('extraContainer');
+        
+        if(extraCount < 5){
+        let input = document.createElement('input');
+        input.type = "text";
+        input.className = "form-control mb-2 extra-entry";
+        input.placeholder = "Activity";
+        container.appendChild(input);
+        extraCount++;
+        }
+        else {
+            showWarning("You can only add up to 5 extra-curricular activities.");
+        }
+    }
+
+
+    function saveToLocalStorage() {
+        let formData = {
+            fullname: document.getElementById("fullname").value,
+            phone: document.getElementById("phone").value,
+            email: document.getElementById("email").value,
+            linkedin: document.getElementById("linkedin").value,
+            address: document.getElementById("address").value,
+            summary: document.getElementById("summary").value,
+            education: [],
+            enhancements: [],
+            experience: [],
+            projects: [],
+            skills: [],
+            extracurricular: []
+        };
+    
+        //education
+        // Capture the first manually entered Education entry
+        if (document.getElementById("education1-degree").value.trim()) {
+            formData.education.push({
+                degree: document.getElementById("education1-degree").value,
+                institution: document.getElementById("education1-institute").value,
+                year: document.getElementById("education1-year").value
+            });
+        }
+    
+        // Capture dynamically added Education entries
+        document.querySelectorAll("#educationContainer .edu-entry").forEach(entry => {
+            formData.education.push({
+                degree: entry.querySelector(".edu-degree").value,
+                institution: entry.querySelector(".edu-institution").value,
+                year: entry.querySelector(".edu-year").value
+            });
+        });
+    
+        //enhancement
+        // Capture first manually entered Enhancement entry
+        if (document.getElementById("enhancement1").value.trim()) {
+            formData.enhancements.push(document.getElementById("enhancement1").value);
+        }
+    
+        // Capture dynamically added Enhancements
+        document.querySelectorAll("#enhancementsContainer .enhancement-entry").forEach(entry => {
+            formData.enhancements.push(entry.querySelector(".enhancement-detail").value);
+        });
+    
+        //experience
+        // Capture first manually entered Experience entry
+        if (document.getElementById("experience1-title").value.trim()) {
+            formData.experience.push({
+                title: document.getElementById("experience1-title").value,
+                duration: document.getElementById("experience1-duration").value,
+                responsibilities: document.getElementById("experience1-responsibilities").value
+            });
+        }
+    
+        // Capture dynamically added Experience entries
+        document.querySelectorAll("#experienceContainer .exp-entry").forEach(entry => {
+            formData.experience.push({
+                title: entry.querySelector(".exp-title").value,
+                duration: entry.querySelector(".exp-duration").value,
+                responsibilities: entry.querySelector(".exp-responsibilities").value
+            });
+        });
+    
+        //Project
+        // Capture first manually entered Project entry
+        if (document.getElementById("project1-name").value.trim()) {
+            formData.projects.push({
+                name: document.getElementById("project1-name").value,
+                details: document.getElementById("project1-details").value
+            });
+        }
+    
+        // Capture dynamically added Projects
+        document.querySelectorAll("#projectsContainer .proj-entry").forEach(entry => {
+            formData.projects.push({
+                name: entry.querySelector(".proj-name").value,
+                details: entry.querySelector(".proj-details").value
+            });
+        });
+    
+        //skill
+        // Capture first manually entered Skill entry
+        if (document.getElementById("skill1").value.trim()) {
+            formData.skills.push(document.getElementById("skill1").value);
+        }
+    
+        // Capture dynamically added Skills
+        document.querySelectorAll("#skillsContainer .skill-entry").forEach(entry => {
+            formData.skills.push(entry.value);
+        });
+    
+        //extra-curricular
+        // Capture first manually entered Extra-Curricular entry
+        if (document.getElementById("extra1").value.trim()) {
+            formData.extracurricular.push(document.getElementById("extra1").value);
+        }
+    
+        // Capture dynamically added Extra-Curricular activities
+        document.querySelectorAll("#extraContainer .extra-entry").forEach(entry => {
+            formData.extracurricular.push(entry.value);
+        });
+    
+        localStorage.setItem("resumeData", JSON.stringify(formData));
+    }
+    
+    document.getElementById("resumeForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        saveToLocalStorage();
+        window.location.href = "preview2.html";
+    });
+</script>
+
+
+</body>
+</html>

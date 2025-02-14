@@ -1,0 +1,313 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Generator</title>
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/css/styles.css">
+  <style>
+    /* Global Styling */
+    html body {  /* Or just html, since body is always inside html */
+        background-color: #000;
+        color: #ffffff;
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+/* Container Enhancements */
+.container {
+    padding: 40px 20px;
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 5rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #ff8c00, #ff2e63);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+h2, h3 {
+    color: #ffcc70;
+}
+
+/* Button Enhancements */
+.btn-primary {
+    background: linear-gradient(135deg, #a02e2e, #ff2e63);
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.4rem;
+    border-radius: 50px;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #ff2e63, #ff8c00);
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(255, 46, 99, 0.6);
+}
+
+/* Information Section */
+.info-section {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+    animation: slideUp 1s ease-in-out;
+}
+
+/* Accordion Customization */
+.accordion-item {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: none;
+    overflow: hidden;
+}
+
+.accordion-header {
+    background: none;
+}
+
+.accordion-button {
+    background: linear-gradient(135deg, #e2af70, #e36987);
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    padding: 15px;
+    border: none;
+}
+
+.accordion-button:hover {
+    background: linear-gradient(135deg, #ff2e63, #ff8c00);
+    transform: scale(1.02);
+}
+
+.accordion-body {
+    background-color: rgba(0, 0, 0, 0.7); /* Black with some transparency */
+    color: white; /* Ensure text is visible */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .btn-primary {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+    
+    .accordion-button {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+    .row.justify-content-center {
+        display: flex;
+        justify-content: center;
+        gap: 20px; /* Adjust spacing between templates */
+      }    
+  </style>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Bootstrap CSS for responsiveness -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <div class="container text-center">
+    <h1 class="mt-5"><strong>GENRES</strong></h1><br>
+    <p class="lead">Create a professional resume in minutes.</p>
+    <p>Click below to start building your professional resume!</p>
+    <p>If not on a desktop , enable Desktop site option in your browser.</p>
+    <a href="./templates.html" class="btn btn-primary">Create Resume</a>
+    <br>
+    <br>
+    <br>
+    
+
+  <!-- Information Section -->
+  <section class="info-section text-start">
+    <h2>What to Include in Your Resume</h2>
+    <div class="accordion" id="resumeInfoAccordion">
+        <!-- Contact Section -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingContact">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseContact" aria-expanded="true">
+                    Contact Information
+                </button>
+            </h3>
+            <div id="collapseContact" class="accordion-collapse collapse show" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    Your name, address, email, and phone number. Optionally, include LinkedIn or website links.<BR>
+                    The contact section should be at the top of your resume and include your first and last name, address, email address and phone number. 
+                    If you don't feel comfortable putting your home address, list your city and state. 
+                    Depending on the job you are applying for, you may also want to include your social media platforms, blog or website.<BR><BR>
+
+                    Your contact information should stand out from the rest of your resume so potential employers don't have to search for it. 
+                    You can make your contact information bolder or larger font than the rest of your resume to make it easy to see.
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile/Objective/Summary -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingProfile">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProfile">
+                    Profile, Objective, or Summary
+                </button>
+            </h3>
+            <div id="collapseProfile" class="accordion-collapse collapse" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    A concise summary or objective, tailored to the job you are applying for.
+                    After your contact information, you may include a resume profile, objective or summary depending on your preferences and goals. 
+                    In general, these can be helpful if they concisely describe your immediate employment goal, but it is not an essential component of a successful resume.
+                    You may prefer to include an objective or summary in a job-search or cover letter.
+                    <br><br><b>Resume profile</b><br>
+                    A resume profile is a quick snippet of your skills and experience as it relates to the specific job you seek.
+                     It would help if you modified your profile each time you apply for a different position.<br><br>
+                     <b>Resume objective</b><br>
+                     A resume objective is another optional section unique to each position you apply for. 
+                     An objective provides the potential employer with an overview of the goals you have for employment.<br><br>
+                     <b>Resume summary</b><br>
+                     This optional part of your resume is one to two sentences or a list that outlines your top skills, experience and achievements as they relate to the position you seek.
+                     Your resume summary could include information like years of experience in a particular job or industry, skills you possess needed for the position and any specific achievements that demonstrate your eligibility for the job.
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience Section -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingExperience">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExperience">
+                    Experience
+                </button>
+            </h3>
+            <div id="collapseExperience" class="accordion-collapse collapse" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    List your work history, job titles, dates, and achievements.
+                    <br>
+                    <b>Experience</b>
+                    Your resume should include an experience section that clearly outlines the specific work and other experience you have that is relevant to the position you seek. Include the companies you have worked for, the title you held at each company and the specific duties of your position. You can also include any significant achievements or awards received in previous jobs you have held.
+<br>If you've held several jobs, only include the last 10 to 15 years of your professional experience in this section. If you are a recent graduate, you can also include internships and summer jobs. Remember to write your job descriptions in the past tense for previous jobs and the present tense if you are still employed there.
+<br><br>Example:<br>
+ABC Company<br>
+Social Media Manager, May 2015-Present<br>
+Lead and manage campaigns on social media platforms, including Twitter, Instagram and Facebook<br>
+Strengthen customer relations by monitoring online company presence and branding<br>
+Have seen an increase in web traffic by 30% by implementing new promotion strategies<br>
+Utilize social media analytics tools to monitor consumer engagement.
+                </div>
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingEducation">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEducation">
+                    Education
+                </button>
+            </h3>
+            <div id="collapseEducation" class="accordion-collapse collapse" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    Include schools attended, degrees, honors, and awards.
+                    <br><br>
+                  <b>Education</b><br>
+The education section is also a necessary part of your resume. This component outlines your educational background and any academic achievements or awards you have received. Include the name of the college you attended, the degrees you completed and honors or achievements you earned. If you are a recent graduate, you can also include your high school education information.
+<br><br>Example:<br>
+University of South Florida<br>
+Bachelor of Arts in English.
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingSkills">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkills">
+                    Skills
+                </button>
+            </h3>
+            <div id="collapseSkills" class="accordion-collapse collapse" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    List relevant technical, soft, and computer skills.<br>
+                    <br><b>Skills</b><br>
+In this section of your resume, you can list your specific skills as they relate to the job you're seeking. Common skills you could put in this section include computer, technical and soft skills that are specifically relevant to the position. You can use the job listing as a guide for what the most appropriate skills to include would be.
+<br>Example:<br>
+Key skills include:<br>
+Data analysis<br>
+SEO/SEM marketing<br>
+Content management<br>
+Social media platforms like Facebook, Instagram and Twitter<br>
+Content editing platforms, including WordPress and Microsoft Office Suite.
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Sections -->
+        <div class="accordion-item">
+            <h3 class="accordion-header" id="headingAdditional">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdditional">
+                    Additional Sections (Certificates, Languages, etc.)
+                </button>
+            </h3>
+            <div id="collapseAdditional" class="accordion-collapse collapse" data-bs-parent="#resumeInfoAccordion">
+                <div class="accordion-body">
+                    Add certifications, language skills, community service, hobbies, and awards if relevant.<br>
+                    Optional parts of your resume<br>
+                    <br><b>Certifications :</b><br><br>
+                    include any major certificate , its details and any relevant information related to those certificate.<br><br>
+            
+There may be more information you wish to include on your resume that doesn't fit in other sections. For example, your community service experience may directly relate to the position you are applying for. Before including additional information, however, be sure to ask yourself whether including this makes you a more appealing candidate. If the answer is no, leave off the extra information.
+<br><br>The following are common optional sections you could include at the end of your resume:<br>
+<b>Awards/achievements</b><br>
+If you have additional awards that you couldn't incorporate into the experience section of your resume, consider doing so here. For example, you could include international recognition, publications, honors and testimonials relevant to the job you seek.
+<br><b>Languages</b><br>
+If you speak more than one language fluently, you may wish to include this in a section after your skills.
+<br><b>Community service</b><br>
+Some companies prefer candidates who have a passion or experience in community service. If this is true for the position you are interested in, include any community service commitments or experience you have as it relates to the job.
+<br><b>Hobbies</b><br>
+More and more companies are interested in understanding their candidates personally. While you don't need to include a long list of your hobbies, you could consider listing two or three things you enjoy doing in your free time that speak to your personality.
+<br><br>Example:<br>
+Reading mystery novels, running marathons and woodworking
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<br>
+
+</div>
+
+    <!-- Bootstrap JS for functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

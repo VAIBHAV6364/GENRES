@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Resume Preview</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Strict A4 Page Size */
+        body {
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            background: #acacac;
+           
+        }
+
+        .main-heading {
+            font-size: 48px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .sub-heading {
+            font-size: 30px;
+            color: #000000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Resume Layout */
+        .resume {
+            display: flex;
+            width: 800px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Prevent overflow */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 38%;
+            background: #162c74;
+            color: white;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Sidebar Section Headers */
+        .section-header {
+            background: #0d1b4b;
+            color: white;
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: left;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            width: 62%;
+            padding-top: 15px;
+            padding-right: 45px;
+            padding-bottom: 15px;
+            padding-left: 15px;
+            box-sizing: border-box;
+        }
+
+        #previewSummary{
+            font-size: 13px;
+            text-align: justify;
+        }
+
+        .section-header{
+            font-size: 19px;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 27px;
+            font-weight: bold;
+            color: #162c74;
+            margin-top: 15px;
+        }
+
+        h3 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 12px;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        /* Horizontal Line */
+        hr {
+            border: none;
+            height: 1px;
+            background: #162c74;
+            margin: 8px 0;
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin: 4px 0;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: lightgray;
+            border-radius: 3px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .progress {
+            height: 100%;
+        }
+
+        .blue { background: #1e90ff; }
+        .green { background: #2ecc71; }
+        .yellow { background: #f1c40f; }
+        .red { background: #e74c3c; }
+        ul {
+            list-style-type: disc; /* Or another style you prefer */
+            padding-left: 20px; /* Add some left padding for indentation */
+        }
+
+        .sidebar p {
+            font-size: 16px; /* Or whatever size you prefer */
+        }
+
+        .download-container {
+            text-align: center; 
+            margin: 20px 0;
+        }
+        
+        #downloadPDF {
+            background-color: #007bff; /* Blue color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        #downloadPDF:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="heading-container">
+        <h1 class="main-heading">Professional Impact Resume - Preview</h1>
+        <p class="sub-heading">Here is your resume with your data!</p>
+    </div>
+
+    <div class="download-container">
+        <button id="downloadPDF">Download PDF</button>
+    </div><br>
+
+    <div class="resume">
+        <div class="sidebar">
+            <h1 id="previewName"></h1>
+            <p><strong><span id="previewJobTitle"></span></strong></p>
+
+            <div class="section-header">Personal Info</div>
+            <p><strong>Address</strong><br><span id="previewLocation"></span></p>
+            <p><strong>Phone</strong><br><span id="previewPhone"></span></p>
+            <p><strong>E-mail</strong><br><span id="previewEmail"></span></p>
+            <p><strong>LinkedIn</strong><br><span id="previewLinkedIn"></span></p>
+
+            <br><br><div class="section-header">Education</div>
+            <hr>
+            <div id="previewEducation"></div>
+
+            <br><div class="section-header">Skills</div>
+            <div id="previewSkills"></div>
+
+            <br><br><div class="section-header">Software Proficiency</div>
+            <div id="previewSoftware"></div>
+
+            <br><br><div class="section-header">Languages</div>
+            <div id="previewLanguages"></div>
+
+            <br><br><div class="section-header">Interests</div>
+            <hr>
+            <div id="previewInterests"></div>
+
+        </div>
+
+        <div class="main-content">
+            <br><br><br><p id="previewSummary"></p>
+
+            <br><h2>Experience</h2>
+            <hr>
+            <div id="previewExperience"></div>
+
+            <h2>Certifications</h2>
+            <hr>
+            <div id="previewCertifications"></div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resumeData = JSON.parse(localStorage.getItem('resumeData7'));
+
+            if (resumeData) {
+                document.getElementById('previewName').textContent = resumeData.name;
+                document.getElementById('previewJobTitle').textContent = resumeData.jobTitle;
+                document.getElementById('previewLocation').textContent = resumeData.location;
+                document.getElementById('previewPhone').textContent = resumeData.phone;
+                document.getElementById('previewEmail').textContent = resumeData.email;
+                document.getElementById('previewLinkedIn').textContent = resumeData.linkedin;
+                document.getElementById('previewSummary').textContent = resumeData.summary;
+
+                // Skills
+                const skillsList = document.getElementById('previewSkills');
+                resumeData.skills.forEach(skill => {
+                    skillsList.innerHTML += `<p>> ${skill}</p>`;
+                });
+
+                // Software
+                const softwareList = document.getElementById('previewSoftware');
+                resumeData.software.forEach(software => {
+                    softwareList.innerHTML += `
+                        <div class="progress-container">
+                            <p>${software.name}</p>
+                            <div class="progress-bar"><div class="progress green" style="width: ${software.level}%;"></div></div>
+                        </div>
+                    `;
+                });
+
+
+                // Languages
+                    document.getElementById("previewLanguages").innerHTML = resumeData.languagesArr
+                    .filter(lang => lang.language && lang.language !== "undefined")
+                    .map(lang => `
+                        <div class="progress-container">
+                        <p>${lang.language}</p>
+                        <div class="progress-bar"><div class="progress green" style="width: ${lang.proficiency*10}%;"></div></div>
+                    </div>
+                `).join("");
+
+                // Experience
+                const experienceList = document.getElementById('previewExperience');
+                resumeData.experience.forEach(exp => {
+                    experienceList.innerHTML += `
+                        <h3 style="font-size: 20px;">${exp.jobTitle}</h3>
+                        <p style="font-size: 14px;"><strong>${exp.duration}</strong></p>
+                        <p style="font-size: 16px;"><strong><em>${exp.company}</em></strong></p>
+                        <ul>
+                    ${exp.description.map(desc => `<li>${desc}</li>`).join('')}
+                        </ul><br>
+                    `;
+                });
+
+                // Education
+                const educationList = document.getElementById('previewEducation');
+                resumeData.education.forEach(edu => {
+                    educationList.innerHTML += `
+                        <h3 style="font-size: 1.1em;">${edu.degree}</h3>
+                        <p style="font-size: 0.9em;"><strong>${edu.year}</strong></p>
+                        <p style="font-size: 0.9em;"><em>${edu.institution}</em></p>
+                        <p style="font-size: 1.0em;"><strong>Precentage/C.G.P.A : </strong>${edu.percentage}</p>
+                        <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+                        <br>
+                    `;
+                });
+
+                // Certifications
+                const certificationsList = document.getElementById('previewCertifications');
+                resumeData.certifications.forEach(cert => {
+                    certificationsList.innerHTML += `
+                        <p style="font-size: 16px;"><strong>${cert.name}</strong></p><span style="text-align: right; font-size: 14px;"><strong>${cert.issueDate}</strong></span>
+                        <p style="font-size: 14px;"><strong>Provider : </strong>${cert.provider}</p><br>
+                    `;
+                });
+
+                // Interests
+                const interestsList = document.getElementById('previewInterests');
+                resumeData.interests.forEach(interest => {
+                    interestsList.innerHTML += `<p>${interest}</p>`;
+                });
+            }
+
+            else {
+                alert("No resume data found. Please fill out the form.");
+                window.location.href = 'form7.html';
+            }
+        });
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById("downloadPDF").addEventListener("click", function() {
+        const element = document.querySelector(".resume"); // The resume container
+
+        html2pdf()
+            .set({
+                margin: [0,0,7.8,0],  //top , left , bottom , right
+                filename: 'Modern_Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(element)
+            .save();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Impact Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+       
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #aaa7a7;
+        }
+
+        .main-heading {
+            font-size: 48px;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .sub-heading {
+            font-size: 30px;
+            color: #000000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Resume Container */
+        .container {
+            width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 0px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Section - Reduced Height */
+        .header {
+            background: #31384b;
+            color: white;
+            padding-top: 20px; /* Reduced from 30px */
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 10px;
+            text-align: left;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 38px;
+            font-weight: normal;
+        }
+        .header h1 span {
+            font-weight: bold;
+        }
+        .header p {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .contact p {
+            margin: 5px 0;
+            font-weight: bold;
+            padding-right: 30px;
+        }
+
+        /* Content Sections */
+        .content {
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 50px;
+        }
+
+        .desc { /* Or a more specific selector if needed */
+            text-align: justify;
+            font-size: 1.1em; /* Adjust as needed */
+        }
+
+        .section {
+            margin-bottom: 15px;
+        }
+        .section h2 {
+            font-size: 32px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Job Titles and Dates */
+        .job {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .company {
+            font-style: italic;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .intro {
+            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        /* Skills Section */
+        .skills p {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .progress-label {
+            flex: 1;
+            font-size: 14px;
+        }
+        .progress-bar {
+            flex: 2;
+            background: #ddd;
+            height: 11px;
+            width: 100%;
+            margin-top: 5px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            position: absolute;
+            background: #333;
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .date {
+            font-style: italic;
+            color: gray;
+        }
+
+        .info-box {
+            margin-bottom: 10px;
+        }
+
+        .info-box strong {
+            display: block;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .skills ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills ul li {
+            background-color: #003366;
+            color: white;
+            padding: 5px;
+            margin-bottom: 5px;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        .bar {
+            background-color: #ccc;
+            height: 10px;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .bar div {
+            height: 100%;
+            background-color: #003366;
+            border-radius: 5px;
+        }
+
+        .level {
+            font-size: 12px;
+            text-align: right;
+            margin-top: -8px;
+        }
+
+        /* Print Settings */
+        @media print {
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+            }
+
+            .container {
+                width: 210mm;
+                height: 297mm;
+                box-shadow: none;
+            }
+        }
+
+        .download-container {
+            text-align: center; 
+            margin: 20px 0;
+        }
+        
+        #downloadPDF {
+            background-color: #007bff; /* Blue color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        #downloadPDF:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heading-container">
+        <h1 class="main-heading">Professional Impact Resume - Preview</h1>
+        <p class="sub-heading">Here is your resume with your data!</p>
+    </div>
+
+    <div class="download-container">
+        <button id="downloadPDF">Download PDF</button>
+    </div><br> 
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="Name"></h1>
+            <p id="jobTitle"></p>
+
+            <div class="contact">
+                <div>
+                    <p id="Phone"></p>
+                    <p id="Linkedin"></p>
+                </div>
+                <div>
+                    <p id="Email"></p>
+                    <p id="Location"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resume Content -->
+    <div class="content">
+        <div class="section">
+            <p class="desc" id="Summary"></p>
+        </div>
+
+        <!-- Experience -->
+        <div class="section">
+            <h2>Experience</h2><br>
+            <div id="Experience"></div>
+        </div>
+
+        <!-- Education -->
+        <div class="section">
+            <h2>Education</h2><br>
+            <div id="Education"></div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="section">
+            <h2>Certifications</h2><br>
+            <div id="Certifications"></div>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+            <h2>Skills</h2><br>
+            <ul id="SkillsList"></ul>
+        </div>
+
+         <!-- Software Skills -->
+         <div class="section">
+            <h2>Software</h2><br>
+                <div id="SoftwareList"></div>
+            </div>
+        
+
+        <div class="section">
+            <h2>Interests</h2><br>
+            <div id="InterestsList"></div> </div><br>
+
+        <div class="section">
+            <h2>Languages</h2><br>
+            <div id="LanguageList"></div> </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const resumeData = JSON.parse(localStorage.getItem('resumeData6'));
+
+        if (resumeData) {
+            document.getElementById('Name').textContent = resumeData.name;
+            document.getElementById('jobTitle').textContent = resumeData.jobTitle;
+            document.getElementById('Summary').textContent = resumeData.summary;
+            document.getElementById('Location').textContent =`📍 ${resumeData.location}`;
+            document.getElementById('Phone').textContent =`📞 ${resumeData.phone}`;
+            document.getElementById('Email').textContent =`📧 ${resumeData.email}`;
+            document.getElementById('Linkedin').textContent =`🔗 ${resumeData.linkedin}`;
+
+            // Experience
+            const experienceContainer = document.getElementById('Experience');
+            resumeData.experience.forEach(exp => {
+                const expDiv = document.createElement('div');
+                expDiv.innerHTML = `
+                    <div class="job">
+                        <span style="font-size: 1.4em;">${exp.jobTitle}</span>
+                        <span style="font-size: 1.2em;">${exp.duration}</span>
+                    </div>
+                    <p class="company" style="font-size: 0.9em;">${exp.company}</p>
+                    <ul class="desc">
+                        ${exp.description.map(descItem => `<li>${descItem}</li>`).join('')}
+                    </ul><br>`;
+                experienceContainer.appendChild(expDiv);
+            });
+
+            // Education
+            const educationContainer = document.getElementById('Education');
+            resumeData.education.forEach(edu => {
+                const eduDiv = document.createElement('div');
+                eduDiv.innerHTML = `
+                    <div class="job">
+                        <span style="font-size: 1.4em;">${edu.degree}</span>
+                        <span style="font-size: 1.2em;">${edu.year}</span>
+                    </div>
+                    <p class="job-title" style="font-size: 0.9em;">${edu.institution}</p>
+                    <ul><li>Percentage/CGPA:  <strong>${edu.percentage}</strong></li></ul>
+                    <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+                `;
+                educationContainer.appendChild(eduDiv);
+            });
+
+            // Certifications
+            const certificationsContainer = document.getElementById('Certifications');
+            resumeData.certifications.forEach(cert => {
+                certificationsContainer.innerHTML += `<p><strong>${cert.name}</strong></p><p>${cert.provider}</p><p>${cert.issueDate}</p><br>`;
+            });
+
+            // Skills
+            const skillsContainer = document.getElementById('SkillsList');
+            resumeData.skills.forEach(skill => {
+                const skillP = document.createElement('p');
+                skillP.textContent = skill;
+                skillP.style.fontSize = '19px'; // Adjust the size as needed
+                skillsContainer.appendChild(skillP);
+            });
+
+            // Interests
+            const interestsContainer = document.getElementById('InterestsList');
+            resumeData.interests.forEach(interest => {
+                const interestP = document.createElement('p');
+                interestP.textContent = interest;
+                interestP.style.fontSize = '20px'; // Adjust the size as needed
+                interestsContainer.appendChild(interestP);
+            });
+
+
+            // Software
+            const softwareContainer = document.getElementById('SoftwareList');
+            resumeData.software.forEach(soft => {
+                const softDiv = document.createElement('div');
+            
+                // Software Name (on the first line)
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = soft.name;
+                nameSpan.style.fontSize = '19px'; // Adjust the size as needed
+                softDiv.appendChild(nameSpan);
+            
+                // Line Break
+                const lineBreak = document.createElement('br');
+                softDiv.appendChild(lineBreak);
+            
+                // Progress Bar (on the second line)
+                const progressBarDiv = document.createElement('div');
+                progressBarDiv.style.width = '100%'; // Make progress bar take full width
+                progressBarDiv.style.backgroundColor = '#ddd'; // Background of the bar
+                progressBarDiv.style.height = '10px';
+                progressBarDiv.style.borderRadius = '5px';
+                progressBarDiv.style.position = 'relative'; // For positioning the inner progress
+            
+                const progressDiv = document.createElement('div');
+                progressDiv.style.width = `${soft.level}%`;
+                progressDiv.style.backgroundColor = '#333';
+                progressDiv.style.height = '10px';
+                progressDiv.style.borderRadius = '5px';
+                progressBarDiv.appendChild(progressDiv);
+            
+            
+                softDiv.appendChild(progressBarDiv);
+            
+                // Line Gap (after each software entry)
+                const gapDiv = document.createElement('div');
+                gapDiv.style.height = '30px'; // Adjust height for the gap size
+                softDiv.appendChild(gapDiv);
+            
+                softwareContainer.appendChild(softDiv);
+            });
+
+            //Languages
+            document.getElementById("LanguageList").innerHTML = resumeData.languagesArr
+            .filter(lang => lang.language && lang.language!== "undefined")
+            .map(lang => `
+                <div style="display: flex; align-items: center;"> 
+                  <span style="width: 20%; font-size: 19px;"><strong>${lang.language}</strong></span> 
+                  <div style="width: 10%;"></div> 
+                  <div class="progress-bar" style="width: 70%;">
+                    <div class="progress" style="width: ${lang.proficiency * 10}%; background-color: #333;"></div> 
+                  </div>
+                </div><br><br>
+              `).join("");
+
+
+        } else {
+            alert("No resume data found. Please fill out the form.");
+            window.location.href = 'form6.html';
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.getElementById("downloadPDF").addEventListener("click", function() {
+        const element = document.querySelector(".container"); // The resume container
+
+        html2pdf()
+            .set({
+                margin: [0,0,4.8,0],  //top , left , bottom , right
+                filename: 'Professional_Impact_Resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            })
+            .from(element)
+            .save();
+    });
+</script>
+
+</body>
+</html>
+
+
+
+

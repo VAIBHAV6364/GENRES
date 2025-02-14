@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresher's Resume 2 - Preview</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        /* Basic Reset */
+    * {
+        box-sizing: border-box;
+      }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+        }
+
+
+        /* Container for resume pages */
+    .container {
+        width: 210mm;
+        min-height: 297mm;
+        background: white;
+        padding: 20px 30px 20px 20px; /* increased right padding */
+        margin: 10px auto 20px auto;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        text-align: left;
+        color: black; /* content in resume remains dark */
+      }
+
+      /* Each A4 page */
+    .resume-page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 20px;
+        margin-bottom: 40px; /* increased space between pages */
+        background: white;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        page-break-after: always;
+        overflow: hidden;
+      }
+
+      .btn-container {
+        text-align: center;
+        margin: 20px;
+      }
+      .btn {
+        padding: 20px 30px;
+        font-size: 18px;    /* Increase font size */
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+      }
+      .btn:hover {
+        background: #0056b3;
+      }
+
+      /*-----------------------*/
+
+        .resume {
+            width: 100%;
+            background: white;
+            padding: 20px;
+            color: black;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resume-section {
+            page-break-after: always; /* Ensures two separate A4 sheets */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .profile-info h1 {
+            margin: 0;
+            color: #000080;
+            text-align: left;
+        }
+
+        .profile-info p {
+            margin: 3px 0;
+            text-align: left;
+        }
+
+        h2 {
+            background: #0056A2;
+            color: white;
+            padding: 5px;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .summary {
+            font-size: 14px;
+            text-align: justify;
+        }
+
+        .year {
+            font-weight: bold;
+            float: right;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        ul li {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .section {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .skills-list, .extra-list {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .skills-list li, .extra-list li {
+            font-size: 14px;
+            padding: 3px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0056A2;
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .resume {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .year {
+                float: none;
+                display: block;
+                text-align: right;
+            }
+
+            .container, .resume-section {
+                width: 95%;
+                padding: 10px;
+              }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Fresher's Resume 2 - Preview</h1>
+    <p>Here is your generated resume!</p>
+
+    <!-- Buttons -->
+  <div class="btn-container">
+    <button class="btn" onclick="downloadCombinedPDF()">Download Combined PDF (Pages as Images)</button>
+  </div>
+
+    <div class="resume-content">
+            <div class="container resume-section" id="page-1">
+                <div class="header">
+                    <div class="profile-info">
+                        <h1 id="name"></h1>
+                        <p><b>Phone:</b> <span id="phone"></span></p>
+                        <p><b>Email:</b> <span id="email"></span></p>
+                        <p><b>LinkedIn:</b> <a id="linkedin" href="#" target="_blank"></a></p>
+                        <p><b>Address:</b> <span id="address"></span></p>
+                    </div>
+                
+                </div>
+
+                <div class="summary">
+                    <p id="summary-text"></p>
+                </div>
+
+                <div class="edu-section">
+                    <h2>EDUCATION</h2>
+                    <div id="education-section"></div>
+                </div>
+
+                <div class="enhance-section">
+                    <h2>PROFESSIONAL ENHANCEMENTS / CERTIFICATES</h2>
+                    <ul id="enhancement-list"></ul>
+                </div>
+            
+             <!-- Experience : Fill Page 1 until space runs out -->
+                <div class="section">
+                    <h2>EXPERIENCE / INTERNSHIP</h2>
+                    <div id="experience-section"></div>
+                </div>
+            </div>
+
+            <div class="container resume-section" id="page-2"><!---->
+               
+                <!-- Remaining Experience (if any) -->
+                <div id="experience-section-page2"></div><!---->
+
+                <div class="section">
+                    <h2>PROJECTS</h2>
+                    <div id="projects-section"></div>
+                </div>
+
+                <div class="section">
+                    <h2>SKILLS</h2>
+                    <p id="skills-text"></p>
+                </div>
+
+                <div class="section">
+                    <h2>EXTRA-CURRICULAR</h2>
+                    <ul id="extra-list"></ul>
+                </div>
+        
+            </div>
+    </div>
+
+    
+    <script>
+        // Load resume data from localStorage
+    function loadResumeData() {
+            let resumeData = JSON.parse(localStorage.getItem("resumeData"));
+        
+            if (!resumeData) {
+                alert("No resume data found. Please fill the form first.");
+                return;
+            }
+        
+            // Fill in Personal Details
+            document.getElementById("name").textContent = resumeData.fullname || "N/A";
+            document.getElementById("phone").textContent = resumeData.phone || "N/A";
+            document.getElementById("email").textContent = resumeData.email || "N/A";
+            document.getElementById("address").textContent = resumeData.address || "N/A";
+            let summaryText = document.getElementById("summary-text");
+summaryText.textContent = resumeData.summary || "N/A";
+summaryText.style.fontSize = "1.2em";  // Adjust size as needed
+
+        
+            // LinkedIn Link
+            let linkedinLink = document.getElementById("linkedin");
+            if (resumeData.linkedin) {
+                linkedinLink.href = resumeData.linkedin;
+                linkedinLink.innerText = resumeData.linkedin;
+            } else {
+                linkedinLink.innerText = "N/A";
+                linkedinLink.href = "#";
+            }
+        
+            // Populate Education
+            // Handle empty education section
+            if (resumeData.education.length === 0) {
+                    educationContainer.innerHTML = "<p>No educations added yet.</p>";
+                }
+            else{
+            // Populate Education Section
+let educationContainer = document.getElementById("education-section");
+educationContainer.innerHTML = "";
+resumeData.education.forEach(edu => {
+    let div = document.createElement("div");
+    div.style.display = "flex";  // Use flexbox for alignment
+    div.style.justifyContent = "space-between"; // Degree & institution on the left, year on the right
+    div.style.marginBottom = "8px"; // Space between entries
+    div.style.fontSize = "19px"; // Increase font size
+
+    let leftPart = document.createElement("div");
+    leftPart.innerHTML = `<strong>${edu.degree}</strong> - ${edu.institution}`;
+    leftPart.style.textAlign = "left"; // Left align degree and institution
+
+    let rightPart = document.createElement("div");
+    rightPart.innerHTML = `<strong>${edu.year}</strong>`; // Make year bold
+    rightPart.style.textAlign = "right"; // Right align year
+    rightPart.style.minWidth = "80px"; // Prevents shifting issues
+
+    div.appendChild(leftPart);
+    div.appendChild(rightPart);
+    educationContainer.appendChild(div);
+});
+
+        }
+        
+            // Populate Enhancements
+            // Handle empty enhancements section
+             if (resumeData.enhancements.length === 0) {
+                    enhancementList.innerHTML = "<p>No enhancements/certificates added yet.</p>";
+                }
+            else{    
+                let enhancementList = document.getElementById("enhancement-list");
+                enhancementList.innerHTML = "";
+                resumeData.enhancements.forEach(enhancement => {
+                    let li = document.createElement("li");
+                    li.innerText = enhancement;
+                    li.style.fontSize = "1.2em"; // Adjust size as needed
+                    li.style.fontWeight = "bold"; // Optional: Make it bold
+                    enhancementList.appendChild(li);
+                });                
+        }
+        
+            // Populate Experience
+            // Handle empty experience section
+             if (resumeData.experience.length === 0) {
+                      experienceContainer1.innerHTML = "<p>No experience added yet.</p>";
+             }
+             else{
+            let experienceContainer1 = document.getElementById("experience-section");
+            let experienceContainer2 = document.getElementById("experience-section-page2");//----------
+            experienceContainer1.innerHTML = "";
+            experienceContainer2.innerHTML = ""; // Clear second page section
+            
+            resumeData.experience.forEach((exp , index) => {
+                let expdiv = document.createElement("div");//-------
+                //expdiv.classList.add("Experience/Certificate");//------------
+                expdiv.innerHTML = `
+                   <span style="font-size: 1.4em; font-weight: bold;">${exp.title}</span> 
+                   <span style="font-size: 1.3em;">(${exp.duration})</span><br>
+                   <div style="font-size: 1.1em; text-align: justify;">${exp.responsibilities}</div>
+                    `;
+                    // Decide where to place the experience (first page or second page)
+                    if (index < 2) { 
+                    // Place first two experiences on Page 1
+                    experienceContainer1.appendChild(expdiv);
+                    experienceContainer1.appendChild(document.createElement("br")); // Add line break
+                    } else {
+                    // Place remaining experiences on Page 2
+                    experienceContainer2.appendChild(expdiv);
+                    experienceContainer2.appendChild(document.createElement("br")); // Add line break
+                    }
+            });
+        }
+        
+            // Populate Skills
+            // Handle empty Skills section
+            if (resumeData.skills.length === 0) {
+                    skillsContainer.innerHTML = "<p>No skills added yet.</p>";
+                }
+            else{
+            let skillsContainer = document.getElementById("skills-text");
+            skillsContainer.innerHTML = "";
+            resumeData.skills.forEach(skill => {
+                let span = document.createElement("span");
+                span.style.padding = "8px";
+                span.style.margin = "8px";
+                span.style.background = "#445567";
+                span.style.color = "white";
+                span.style.borderRadius = "6px";
+                span.style.display = "inline-block"; // Ensures spacing works well
+                span.style.fontSize = "1.1em"; // Increase text size
+                span.style.fontWeight = "bold"; // Optional: Make text bold
+                span.innerText = skill;
+                skillsContainer.appendChild(span);
+            });
+            
+        }
+        
+            // Populate Projects
+            // Handle empty Projects section
+            if (resumeData.projects.length === 0) {
+                    projectsContainer.innerHTML = "<p>No projects added yet.</p>";
+                }
+            else{
+                let projectsContainer = document.getElementById("projects-section");
+                projectsContainer.innerHTML = "";
+                resumeData.projects.forEach(proj => {
+                    let div = document.createElement("div");
+                    div.innerHTML = `
+                        <span style="font-size: 1.3em; font-weight: bold;">${proj.name}</span><br>
+                        <div style="font-size: 1.1em; text-align: justify;">${proj.details}</div>
+                    `;
+                    projectsContainer.appendChild(div);
+                
+                    // Add an empty line for better spacing
+                    projectsContainer.appendChild(document.createElement("br"));
+                });
+        }
+        
+            // Populate Extra-Curricular Activities
+            // Handle empty extra section
+            if (resumeData.extracurricular.length === 0) {
+                      extraContainer.innerHTML = "<p>No extra-curriculars added yet.</p>";
+             }
+             else{
+                let extraContainer = document.getElementById("extra-list");
+extraContainer.innerHTML = "";
+extraContainer.style.display = "flex"; // Make items appear in a row
+extraContainer.style.flexWrap = "wrap"; // Allow wrapping to the next line if needed
+extraContainer.style.gap = "10px"; // Add space between items
+
+resumeData.extracurricular.forEach(activity => {
+    let li = document.createElement("li");
+    li.innerText = activity;
+    li.style.fontSize = "1.1em"; // Increase font size
+    li.style.listStyle = "none"; // Remove default bullet points
+    li.style.padding = "8px 12px"; // Add some padding
+    li.style.background = "white"; // Add background color
+    li.style.color = "black"; // Text color
+    li.style.borderRadius = "6px"; // Rounded corners
+    li.style.fontWeight = "bold"; // Optional: Make text bold
+    li.style.display = "inline-block"; // Ensures spacing works well
+    extraContainer.appendChild(li);
+
+            });
+        }
+    };
+        console.log(localStorage.getItem("resumeData"));
+
+
+      // Download combined PDF (each page as an image, then combined)
+    async function downloadCombinedPDF() {
+        const { jsPDF } = window.jspdf;
+        let pdf = new jsPDF("portrait", "mm", "a4");
+  
+        // Get all resume pages
+        let pages = document.querySelectorAll(".resume-section");
+        for (let i = 0; i < pages.length; i++) {
+          let canvas = await html2canvas(pages[i], { scale: 2, useCORS: true });
+          let imgData = canvas.toDataURL("image/png");
+          if (i > 0) pdf.addPage();
+          // Calculate width and height (A4: 210mm x 297mm) - adjust if necessary
+          pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+        }
+        pdf.save("Fresher's_Resume_2.pdf");
+      }
+
+
+        window.onload = loadResumeData;
+    </script>
+
+   
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplistic Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        /* Page Setup */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+
+
+        /* Heading Section */
+.heading-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.main-heading {
+    font-size: 48px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.sub-heading {
+    font-size: 30px;
+    color: #bbb;
+    margin-bottom: 15px;
+}
+
+
+
+        .resume-container {
+            width: 210mm; 
+            height: 297mm; /* A4 size */
+            background: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        .header {
+            width: 100%;
+            text-align: left;
+            padding-bottom: 0px;
+            margin-bottom: 0px;
+        }
+
+        /* Ensure no margins in nested elements inside the header */
+.header * {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.btn-container {
+    text-align: center;
+    margin-bottom: 15px; /* Reduced margin to bring it closer */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+  .btn {
+    padding: 20px 30px;
+    font-size: 18px;    /* Increase font size */
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+  }
+  .btn:hover {
+    background: #0056b3;
+  }
+
+        .name {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .position {
+            font-size: 18px;
+            color: gray;
+        }
+        .contact-info {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .contact-info span {
+            margin: 5px 10px;
+            display: inline-block;
+        }
+
+        /* Two Column Layout */
+        .content {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0px !important;
+            padding-top: 0px !important;
+        }
+        .left-column {
+            width: 58%;
+        }
+        .right-column {
+            width: 38%;
+        }
+
+        /* Sections */
+        .section {
+            margin-top: 20px;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            border-bottom: 3px solid black;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Experience */
+        .job-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+        .company {
+            font-style: italic;
+            font-weight: bold;
+        }
+        .job-details {
+            font-size: 14px;
+            color: gray;
+        }
+        .job-description {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .job-description ul {
+            padding-left: 20px;
+        }
+
+        /* Right Column Sections */
+        .education-entry, .skills-entry, .strength-entry, .language-entry {
+            margin-bottom: 15px;
+        }
+        .education-entry .degree {
+            font-weight: bold;
+        }
+        .skills-entry span {
+            display: inline-block;
+            background: #eaeaea;
+            padding: 5px 10px;
+            margin: 3px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .strength-entry strong {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        /* Language Proficiency */
+        .language-entry .dots {
+            margin-top: 5px;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: #000;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 3px;
+        }
+        .dot.gray {
+            background-color: lightgray;
+        }
+
+
+        /* Responsive Layout Adjustments */
+@media (max-width: 768px) {
+    .resume-container {
+        padding: 15px;
+    }
+    .content {
+        flex-direction: column;
+    }
+    .left-column, .right-column {
+        width: 100%;
+    }
+    .main-heading {
+        font-size: 28px;
+    }
+    .sub-heading {
+        font-size: 18px;
+    }
+    .btn {
+        width: 100%;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-heading {
+        font-size: 24px;
+    }
+    .sub-heading {
+        font-size: 16px;
+    }
+    .btn {
+        font-size: 12px;
+    }
+    .resume-container {
+        padding: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="resume-content">
+        <!-- Heading Section -->
+    <div class="heading-container">
+        <h1 class="main-heading">Simplistic Resume - Preview</h1>
+        <p class="sub-heading">Here is your resume with your data!</p>
+    </div>
+
+        <div class="btn-container">
+            <button class="btn" onclick="downloadCombinedPDF()">Download Combined PDF (Pages as Images)</button>
+        </div>
+
+  <div class="resume-content">
+<div class="resume-container">
+    <!-- Header -->
+    <div class="header">
+        <div class="name" id="name"></div>
+        <div class="position" id="position"></div>
+        <div class="contact-info">
+            <span id="phone"></span>
+            <span id="email"></span>
+            <span id="location"></span>
+            <span id="linkedin"></span>
+        </div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="content">
+        <!-- Left Column -->
+        <div class="left-column">
+            <div class="section">
+                <div class="section-title">SUMMARY</div>
+                <p id="summary"></p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">EXPERIENCE</div>
+                <div id="experience-list"></div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <div class="section">
+                <div class="section-title">EDUCATION</div>
+                <div id="education-list"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">SKILLS</div>
+                <div class="skills-entry" id="skills-list"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">STRENGTHS</div>
+                <div id="strength-list"></div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">LANGUAGES</div>
+                <div id="language-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    // Retrieve stored form data from localStorage
+    function loadResumeData() {
+        const resumeData = JSON.parse(localStorage.getItem("resumeData3")) || {};
+
+        document.getElementById("name").textContent = resumeData.fullName || "";
+        document.getElementById("position").textContent = resumeData.position || "";
+        document.getElementById("phone").textContent = resumeData.contact ? `📞 ${resumeData.contact}` : "";
+        document.getElementById("email").textContent = resumeData.email ? `📧 ${resumeData.email}` : "";
+        document.getElementById("location").textContent = resumeData.location ? `📍 ${resumeData.location}` : "";
+        document.getElementById("linkedin").textContent = resumeData.linkedin ? `🔗 ${resumeData.linkedin}` : "";
+        document.getElementById("summary").textContent = resumeData.summary || "";
+
+        // Load experience
+        const experienceList = document.getElementById("experience-list");
+        experienceList.innerHTML = resumeData.experience?.map(exp => `
+            <div class="job-title">${exp.jobTitle || ""}</div>
+            <div class="company">${exp.company || ""}</div>
+            <div class="job-details">📅 ${exp.duration || ""} 📍 ${exp.location || ""}</div>
+            <div class="job-description"><ul>${(exp.description || []).map(item => `<li>${item}</li>`).join("")}</ul></div>
+        `).join("") || "";
+
+        // Load education
+        document.getElementById("education-list").innerHTML = resumeData.education?.map(edu => `
+            <div class="education-entry">
+                <div class="degree">${edu.degree || ""}</div>
+                <div class="institution">${edu.institution || ""}</div>
+                <div class="job-details">📅 ${edu.year || ""}  ${edu.location || ""}</div>
+            </div>
+        `).join("") || "";
+
+        // Load skills
+        document.getElementById("skills-list").innerHTML = resumeData.skills?.map(skill => `<span>${skill}</span>`).join("") || "";
+
+        // Load strengths
+        document.getElementById("strength-list").innerHTML = resumeData.strengths?.map(strength => `<p>${strength}</p>`).join("") || "";
+
+        // Load languages
+        document.getElementById("language-list").innerHTML = resumeData.languagesArr?.filter(lang => lang.language && lang.proficiency).map(lang => `
+            <div class="language-entry">
+                <strong>${lang.language}</strong>
+                <div class="dots">${Array(10).fill(0).map((_, i) => `<span class="dot ${i < lang.proficiency ? '' : 'gray'}"></span>`).join("")}</div>
+            </div>
+        `).join("") || "";
+    }
+
+    //print function
+    function downloadCombinedPDF() {
+        const resumeElement = document.querySelector(".resume-container"); // The resume container
+    
+        // Capture the resume container as an image
+        html2canvas(resumeElement, { scale: 2 }).then(canvas => {
+            const imgData = canvas.toDataURL("image/png"); // Convert canvas to image
+    
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF("p", "mm", "a4"); // Create an A4 PDF
+    
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Maintain aspect ratio
+    
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight); // Add image to PDF
+            pdf.save("Simplistic_Resume.pdf"); // Trigger download
+        });
+    }
+    
+
+    window.onload = loadResumeData;
+</script>
+
+</body>
+</html>

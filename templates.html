@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select a Resume Template</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+
+  <style>
+    .row.justify-content-center {
+      display: flex;
+      justify-content: center;
+      gap: 20px; /* Adjust spacing between templates */
+    }
+
+    /* 🌙 Dark Theme Styling */
+body {
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* 🔙 Back Button */
+#arrow-back-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #ff6b81;
+  color: #ff6b81;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+  border-radius: 50px;
+  padding: 10px 15px;
+}
+
+#arrow-back-btn:hover {
+  background: #ff6b81;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0px 0px 15px rgba(255, 107, 129, 0.6);
+}
+
+/* 🏆 Heading Styling */
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #ff6b81, #ffcc70);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+p.lead {
+  font-size: 1.2rem;
+  color: #ffcc70;
+}
+
+p.text-muted {
+  font-size: 1rem;
+}
+
+p.text-muted{
+  color: white;
+}
+
+/* 📦 Card Enhancements */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+}
+
+.card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+/* 📝 Card Text */
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffcc70;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #eee;
+}
+
+/* 🎨 Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #ac2ed2, #3564cf);
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  transition: 0.3s ease-in-out;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #000000, #0d00ff);
+  transform: scale(1.05);
+  box-shadow: 0px 4px 17px rgba(255, 107, 129, 0.6);
+}
+
+/* 🌟 Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 Responsiveness */
+@media (max-width: 768px) {
+  h1 {
+      font-size: 2.5rem;
+  }
+  
+  .btn-primary {
+      font-size: 1rem;
+      padding: 10px 20px;
+  }
+  
+  .card {
+      margin-bottom: 20px;
+  }
+}
+
+    
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Back Button -->
+    <a href="index.html" class="btn btn-outline-primary mt-3 mb-4" id ="arrow-back-btn" style="position: absolute; top: 10px; left: 10px;">
+      &larr; 
+    </a><br>
+    
+    <!-- Heading -->
+    <div class="text-center mt-5">
+      <h1>Select a Resume Template</h1>
+      <p class="lead"><strong>Choose a template that suits your style and start editing today!</strong></p>
+      <p class="text" style="color: white;">Scroll down to view all available templates.</p>
+      <p class="text" style="color: white;">Analyze all the resume and the data needed to form that resume , have those details ready to fill in to make the resume.</p>
+      <p class="text">It is better to use this website in on a Desktop for better and catered for experience!</p>
+    </div>
+
+    <!-- First Row -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/fresher1.jpg" class="card-img-top" alt="Template 1">
+          <div class="card-body">
+            <h5 class="card-title">Fresher's Template 1</h5>
+            <p class="card-text">A structured and academic-focused resume template designed for fresh graduates and students. This template emphasizes academic achievements, projects, and research experience in a clean and organized format. Ideal for those applying for higher studies, research roles, or entry-level technical positions.</p>
+            <a href="form1.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/fresher2.jpg" class="card-img-top" alt="Template 2">
+          <div class="card-body">
+            <h5 class="card-title">Fresher's template 2</h5>
+            <p class="card-text">A clean and structured resume template designed for professionals and fresh graduates. It highlights education, internships, projects, and key skills in an organized manner. The template balances professional experience with extracurricular activities, making it suitable for individuals seeking internships, entry-level positions, or career advancements across various industries.</p>
+            <a href="form2.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Second Row -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/template5.jpg" class="card-img-top" alt="Template 4">
+          <div class="card-body">
+            <h5 class="card-title">Simplistic Template</h5>
+            <p class="card-text">A clean and professional resume template with a structured layout. This design balances bold headings with a minimalistic approach, ensuring readability and clarity. Ideal for corporate professionals looking to showcase their experience, skills, and strengths in a polished and organized manner.</p>
+            <a href="form3.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/template2.jpg" class="card-img-top" alt="Template 2">
+          <div class="card-body">
+            <h5 class="card-title">Classic Template</h5>
+            <p class="card-text">A sleek design with modern elements and customizable sections. This template emphasizes your skills and experience in a visually appealing way. Perfect for those who want a clean, professional, and contemporary resume.</p>
+            <a href="form4.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Third Row -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/template3.jpg" class="card-img-top" alt="Template 3">
+          <div class="card-body">
+            <h5 class="card-title">Creative Template</h5>
+            <p class="card-text">A bold and visually striking design for creative professionals. This template uses a modern layout with bold colors and eye-catching graphics. Perfect for those who want to make a strong first impression with their resume.</p>
+            <a href="form5.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/template4.jpg" class="card-img-top" alt="Template 4">
+          <div class="card-body">
+            <h5 class="card-title">Professional Impact Template</h5>
+            <p class="card-text">A powerful and impactful design that highlights your career progression and accomplishments. This template uses a clean and professional layout with bold headings and a focus on your experience and skills. Perfect for those who want to showcase their career trajectory and achievements.</p>
+            <a href="form6.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- fourth Row -->
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-5 col-12">
+        <div class="card">
+          <img src="images/template1.jpg" class="card-img-top" alt="Template 1">
+          <div class="card-body">
+            <h5 class="card-title">Modern Template</h5>
+            <p class="card-text">A simple and professional design suitable for any industry. This template emphasizes your experience and skills with a clean and easy-to-read layout. Perfect for those who want a traditional and reliable resume format.</p>
+            <a href="form7.html" class="btn btn-primary">Select This Template</a>
+          </div>
+        </div>
+      </div>
+
+  </div>
+  
+  
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
