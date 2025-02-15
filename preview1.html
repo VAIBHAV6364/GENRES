@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fresher's Resume 1</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* Basic Reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    /* Heading and Subheading */
+    .page-heading {
+      padding: 10px;
+      background: #222;
+    }
+    .page-heading h1 {
+      margin: 0;
+      font-size: 68px;
+    }
+
+    .page-heading h2 {
+        margin: 0;
+        font-size: 38px;
+        background-color: #222;
+      }
+
+    .page-heading p {
+      margin: 5px 0 15px;
+      font-size: 26px;
+    }
+    /* Container for resume pages */
+    .container {
+      width: 210mm;
+      min-height: 297mm;
+      background: white;
+      padding: 20px 30px 20px 20px; /* increased right padding */
+      margin: 10px auto 20px auto;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+      text-align: left;
+      color: black; /* content in resume remains dark */
+    }
+    /* Each A4 page */
+    .resume-page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20px;
+      margin-bottom: 40px; /* increased space between pages */
+      background: white;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+      page-break-after: always;
+      overflow: hidden;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .header-left, .header-right {
+      width: 48%;
+    }
+    h1 {
+      margin-bottom: 5px;
+      font-size: 24px;
+    }
+    h2 {
+      font-size: 18px;
+      background: #ccc;
+      padding: 5px;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #ddd;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .btn-container {
+      text-align: center;
+      margin: 20px;
+    }
+    .btn {
+      padding: 20px 30px;
+      font-size: 18px;    /* Increase font size */
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    /* Responsive adjustments */
+    @media only screen and (max-width: 600px) {
+      .container, .resume-page {
+        width: 95%;
+        padding: 10px;
+      }
+      .header {
+        flex-direction: column;
+      }
+      .header-left, .header-right {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Heading Section -->
+  <div class="page-heading">
+    <h1>Fresher's Resume 1</h1>
+    <h2>Here is your generated Resume</h2>
+    <p>NOTE : If you are viewing this in a mobile or any device other than desktop ,  the resume preview may slightly differ due to limitations in space!</p>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-container">
+    <button class="btn" onclick="downloadCombinedPDF()">Download Combined PDF (Pages as Images)</button>
+  </div>
+
+  <div id="resume-content">
+    <!-- Page 1 -->
+    <div class="container resume-page" id="page-1">
+      <!-- Header Section -->
+      <div class="header">
+        <div class="header-left">
+          <h1 id="name">Your Name</h1>
+          <p id="designation">Your Role</p>
+          <p id="department">Your Department</p>
+          <p id="institute">Your Institute</p>
+        </div>
+        <div class="header-right">
+            <br><br><br>
+          <p id="phone">Your Phone</p>
+          <p id="email">Your Email</p>
+          <p><a id="website" href="#">Your Website</a></p>
+        </div>
+      </div>
+
+      <!-- Academic Details -->
+      <div class="academic-section">
+        <h2>Academic Details</h2>
+        <table id="academic-table">
+          <tr>
+            <th>Year</th>
+            <th>Degree</th>
+            <th>Institute</th>
+            <th>Percentage/CGPA</th>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Objective -->
+      <div class="objective-section">
+        <h2>Objectives</h2>
+        <ul id="objective-list">  </ul> 
+      </div>
+
+      <!-- Projects: Fill Page 1 until space runs out -->
+      <div id="projects-container">
+        <h2>Major Projects</h2>
+      </div>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="container resume-page" id="page-2">
+      <!-- Remaining Projects (if any) -->
+      <div id="projects-container-page2"></div>
+      <!-- Certificates -->
+      <div id="certificates-container">
+        <h2>Certificates</h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load resume data from localStorage
+    function loadResumeData() {
+      let data = JSON.parse(localStorage.getItem("resumeData"));
+      if (data) {
+        document.getElementById("name").textContent = data.name;
+        document.getElementById("designation").textContent = data.title;
+        document.getElementById("department").textContent = data.department;
+        document.getElementById("institute").textContent = data.institute;
+        document.getElementById("phone").textContent = data.phone;
+        document.getElementById("email").textContent = data.email;
+        document.getElementById("website").href = data.website;
+        document.getElementById("website").textContent = data.website;
+        
+        // Objective (display as a list)
+        let objectiveList = document.getElementById("objective-list");
+        if (Array.isArray(data.objective)) { // Check if it's an array (important!)
+            data.objective.forEach(point => {
+                let listItem = document.createElement("li");
+                listItem.textContent = point;
+                objectiveList.appendChild(listItem);
+            });
+        } else if (typeof data.objective === 'string') { // Handle cases where it's a single string
+            let listItem = document.createElement("li");
+            listItem.textContent = data.objective;
+            objectiveList.appendChild(listItem);
+        }
+        else { // Handle other unexpected types, if any
+            console.error("Objective data is not an array or string:", data.objective);
+            objectiveList.innerHTML = "<li>No objective provided.</li>"; // Or some other default message
+        }
+
+
+        // Academic Details
+        let academicTable = document.getElementById("academic-table");
+        data.academics.forEach(entry => {
+          let row = academicTable.insertRow();
+          row.innerHTML = `<td>${entry.year}</td><td>${entry.degree}</td><td>${entry.institute}</td><td>${entry.cgpa}</td>`;
+        });
+
+        // Load Projects: Each project in its own div.
+        let projectsContainer1 = document.getElementById("projects-container");
+        let projectsContainer2 = document.getElementById("projects-container-page2");
+        // Simple splitting: first half on page 1, rest on page 2.
+        data.projects.forEach((item, index) => {
+          let projectDiv = document.createElement("div");
+          projectDiv.classList.add("project");
+          projectDiv.innerHTML = `<h3>${item.title}</h3><p><strong>Mentor:</strong> ${item.mentor}</p><p>${item.description}</p>`;
+          if (index < Math.ceil(data.projects.length / 2)) {
+            projectsContainer1.appendChild(projectDiv);
+          } else {
+            projectsContainer2.appendChild(projectDiv);
+          }
+        });
+
+        // Load Certificates: Each certificate in its own div.
+        let certificatesContainer = document.getElementById("certificates-container");
+        data.certificates.forEach(item => {
+          let certDiv = document.createElement("div");
+          certDiv.classList.add("certificate");
+          certDiv.innerHTML = `<h3>${item.name}</h3><p><strong>Issued By:</strong> ${item.issuedBy} (${item.date})</p><p>${item.description}</p>`;
+          certificatesContainer.appendChild(certDiv);
+        });
+      }
+    }
+
+    // Download combined PDF (each page as an image, then combined)
+    async function downloadCombinedPDF() {
+      const { jsPDF } = window.jspdf;
+      let pdf = new jsPDF("portrait", "mm", "a4");
+
+      // Get all resume pages
+      let pages = document.querySelectorAll(".resume-page");
+      for (let i = 0; i < pages.length; i++) {
+        let canvas = await html2canvas(pages[i], { scale: 2, useCORS: true });
+        let imgData = canvas.toDataURL("image/png");
+        if (i > 0) pdf.addPage();
+        // Calculate width and height (A4: 210mm x 297mm) - adjust if necessary
+        pdf.addImage(imgData, "PNG", 0, 0, 210, 297);
+      }
+      pdf.save("Fresher's_Resume_1.pdf");
+    }
+
+    window.onload = loadResumeData;
+  </script>
+
+</body>
+</html>
